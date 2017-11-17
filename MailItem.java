@@ -15,6 +15,8 @@ public class MailItem
     private String subject;
     // The text of the message.
     private String message;
+    //
+    private boolean spam;
 
     /**
      * Create a mail item from sender to the given recipient,
@@ -62,21 +64,39 @@ public class MailItem
      */
     public void print()
     {
-        System.out.println("From: " + from);
-        System.out.println("To: " + to);
-        System.out.println("Subject: " + subject);
-        String cadena = message.substring(0,3);
-        if (cadena.equals("?=?")){
-            message = message.replace('$', 'a');
-            message = message.replace('&', 'e');
-            message = message.replace('#', 'i');
-            message = message.replace('+', 'o');
-            message = message.replace('*', 'u');
-            System.out.println("Message: " + message);
+        detectSpam();
+        if(spam == false){
+            System.out.println("From: " + from);
+            System.out.println("To: " + to);
+            System.out.println("Subject: " + subject);
+            String cadena = message.substring(0,3);
+            if (cadena.equals("?=?")){
+                message = message.replace('$', 'a');
+                message = message.replace(':', 'á');
+                message = message.replace('&', 'e');
+                message = message.replace('_', 'é');
+                message = message.replace('#', 'i');
+                message = message.replace('@', 'í');
+                message = message.replace('+', 'o');
+                message = message.replace('%', 'ó');
+                message = message.replace('*', 'u');
+                message = message.replace('!', 'ú');
+
+                System.out.println("Message: " + message);
+            }
+            else{
+                System.out.println("Message: " + message);
+            }
         }
         else{
-            System.out.println("Message: " + message);
+            System.out.println("El mensaje es spam");
         }
     }
-    
+
+    public void detectSpam()
+    {
+        if((message.indexOf("regalo")!=-1)||(message.indexOf("viagra")!=-1)){
+            spam = true;
+        }
+    }
 }
