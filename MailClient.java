@@ -18,7 +18,7 @@ public class MailClient
     public MailClient(MailServer server, String user)
     {
         this.server = server;
-        this.user = user;
+        this.user = user;     
     }
 
     /**
@@ -54,5 +54,13 @@ public class MailClient
     {
         MailItem item = new MailItem(user, to, subject, message);
         server.post(item);
+    }
+
+    /**
+     * Funcionalidad 1
+     */
+    public void totalMessage()
+    {
+        System.out.println("Tiene estos mensajes: " + server.howManyMailItems(user));
     }
 }
