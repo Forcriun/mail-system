@@ -11,6 +11,8 @@ public class MailItem
     private String from;
     // The intended recipient.
     private String to;
+    // The subject of the message.
+    private String subject;
     // The text of the message.
     private String message;
 
@@ -21,10 +23,11 @@ public class MailItem
      * @param to The intended recipient of this item.
      * @param message The text of the message to be sent.
      */
-    public MailItem(String from, String to, String message)
+    public MailItem(String from, String to, String subject, String message)
     {
         this.from = from;
         this.to = to;
+        this.subject = subject;
         this.message = message;
     }
 
@@ -59,6 +62,7 @@ public class MailItem
     {
         System.out.println("From: " + from);
         System.out.println("To: " + to);
+        System.out.println("Subject: " + subject);
         System.out.println("Message: " + message);
     }
 }
