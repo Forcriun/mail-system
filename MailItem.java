@@ -29,6 +29,7 @@ public class MailItem
         this.to = to;
         this.subject = subject;
         this.message = message;
+        this.spam = false;
     }
 
     /**
@@ -56,13 +57,26 @@ public class MailItem
     }
 
     /**
-     * Print this mail message to the text terminal.
+     * Print this mail message to the text terminal. If the message is encrypted,
+     * it decrypts it.
      */
     public void print()
     {
         System.out.println("From: " + from);
         System.out.println("To: " + to);
         System.out.println("Subject: " + subject);
-        System.out.println("Message: " + message);
+        String cadena = message.substring(0,3);
+        if (cadena.equals("?=?")){
+            message = message.replace('$', 'a');
+            message = message.replace('&', 'e');
+            message = message.replace('#', 'i');
+            message = message.replace('+', 'o');
+            message = message.replace('*', 'u');
+            System.out.println("Message: " + message);
+        }
+        else{
+            System.out.println("Message: " + message);
+        }
     }
+    
 }

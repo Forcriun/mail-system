@@ -55,6 +55,19 @@ public class MailClient
         MailItem item = new MailItem(user, to, subject, message);
         server.post(item);
     }
+    
+    public void sendMailItemEncrypted(String to, String subject, String message){
+        String cadena = message;
+        cadena = cadena.replace('a', '$');
+        cadena = cadena.replace('e', '&');
+        cadena = cadena.replace('i', '#');
+        cadena = cadena.replace('o', '+');
+        cadena = cadena.replace('u', '*');
+        cadena = "?=? " + cadena;
+
+        MailItem item = new MailItem(user, to, subject, cadena);
+        server.post(item);
+    }
 
     /**
      * Funcionalidad 1
