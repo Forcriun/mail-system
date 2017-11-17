@@ -49,6 +49,14 @@ public class MailItem
     {
         return to;
     }
+    
+    /**
+     * @return The subject of the message.
+     */
+    public String getSubject()
+    {
+        return subject;
+    }
 
     /**
      * @return The text of the message.
@@ -60,7 +68,7 @@ public class MailItem
 
     /**
      * Print this mail message to the text terminal. If the message is encrypted,
-     * it decrypts it.
+     * it decrypts it.(Funcionalidades 04 y 06) - Dídac y Cristian
      */
     public void print()
     {
@@ -93,6 +101,9 @@ public class MailItem
         }
     }
 
+    /**
+     * Funcionalidad 04 - Dídac
+     */
     public void detectSpam()
     {
         if((message.indexOf("regalo")!=-1)||(message.indexOf("viagra")!=-1)){

@@ -14,7 +14,6 @@ public class MailClient
     // 
     private MailItem ultimoEmail;
 
-
     /**
      * Create a mail client run by user and attached to the given server.
      */
@@ -25,11 +24,19 @@ public class MailClient
     }
 
     /**
-     * Return the next mail item (if any) for this user.
+     * Return the next mail item (if any) for this user.(Funcionalidad 04 - Dídac)
      */
     public MailItem getNextMailItem()
     {
-       return server.getNextMailItem(user);
+        MailItem item = server.getNextMailItem(user);
+        if(item == null){
+            System.out.println("No new mail.");
+        }
+        else if((item.getMessage().indexOf("viagra")!=-1)||(item.getMessage().indexOf("regalo")!=-1)){
+            item = null;
+        }
+        ultimoEmail = item;
+        return item;
     }
 
     /**
@@ -59,7 +66,10 @@ public class MailClient
         MailItem item = new MailItem(user, to, subject, message);
         server.post(item);
     }
-    
+
+    /**
+     * Funcionalidad 06 - Cristian
+     */
     public void sendMailItemEncrypted(String to, String subject, String message){
         String cadena = message;
         cadena = cadena.replace('a', '$');
@@ -79,21 +89,52 @@ public class MailClient
     }
 
     /**
-     * Funcionalidad 1
+     * Funcionalidad 01 (Lorena)
      */
     public void totalMessage()
     {
         System.out.println("Tiene estos mensajes: " + server.howManyMailItems(user));
     }
-    
+
     /**
      * Método añadido que permite imprimir por pantalla el último mensaje
-     * tantas veces como se desee (parte 02- Aitor Martínez)
+     * tantas veces como se desee (Funcionalidad 02 - Aitor Martínez)
      */
     public void imprimirUltimoMensaje()
     {
-        ultimoEmail.print();
+        if(ultimoEmail == null) {
+            System.out.println("Error");
+        }
+        else{ 
+            ultimoEmail.print();  
+        }
     }
- 
+
+    /**
+     * Método que cuando se invoque permita descargar del servidor el siguiente mensaje del usuario
+     * y responda automáticamente al emisor con una frase indicando que hemos recibido su correo y
+     * dándole las gracias. Si no hay ningún mensaje para el usuario el método no hace nada 
+     * e informa de la situación por pantalla.(Funcionalidad 03 - Diego)
+     */
+    public void getDownload()
+    {
+        MailItem item = server.getNextMailItem(this.user);
+        if((item.getMessage().indexOf("viagra")!=-1)||(item.getMessage().indexOf("regalo")!=-1)){
+            System.out.println("El mensaje es spam");
+        }
+        else if (item == null)
+        {
+            System.out.println("No hay ningun mensaje");
+        }
+        else
+        {
+            String gracias = "He recibido tu mensaje, gracias\n" + item.getMessage();
+            String asuntoOriginal = "Re: " + item.getSubject();
+            sendMailItem(item.getFrom(), asuntoOriginal, gracias);
+            server.post(item);
+            ultimoEmail = item;
+            item.print();
+        }
+    }
 
 }
