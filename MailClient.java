@@ -45,7 +45,7 @@ public class MailClient
             item = null;
         }
         else{
-            if(item.getMessage().length() > longestEmail.getMessage().length()){
+            if(item.getMessage().length() >= longestEmail.getMessage().length()){
                 longestEmail = item;
             }
             ultimoEmail = item;
@@ -71,7 +71,7 @@ public class MailClient
             ultimoEmail = item;
             item.print();
             totalReceived++;
-            if(item.getMessage().length() > longestEmail.getMessage().length()){
+            if(item.getMessage().length() >= longestEmail.getMessage().length()){
                 longestEmail = item;
             }
         }
@@ -91,30 +91,27 @@ public class MailClient
     }
 
     /**
-     * Funcionalidad 06 - Cristian
+     * Funcionalidad 06 - Cristian Martínez
      */
     public void sendMailItemEncrypted(String to, String subject, String message){
         //Version limpia
         String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
         String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
-
         for (int i = 0; i < vowels.length; i++){
             message = message.replace(vowels[i], vowelsEncrypted[i]);
         }
-
         //Mark to reference an encrypted message
         message = "?=? " + message;
-
         //Creates a new email object
         MailItem item = new MailItem(user, to, subject, message);
-
         //Sends it
         server.post(item);
         totalSent++;
     }
 
     /**
-     * Funcionalidad 01 (Lorena)
+     * Método que muestra por pantalla el número de correos electrónicos que tiene un usuario
+     * en el servidor. -- Funcionalidad 01 (Lorena Alonso)
      */
     public void totalMessage()
     {
@@ -139,42 +136,51 @@ public class MailClient
      * Método que cuando se invoque permita descargar del servidor el siguiente mensaje del usuario
      * y responda automáticamente al emisor con una frase indicando que hemos recibido su correo y
      * dándole las gracias. Si no hay ningún mensaje para el usuario el método no hace nada 
-     * e informa de la situación por pantalla.(Funcionalidad 03 - Diego)
+     * e informa de la situación por pantalla.(Funcionalidad 03 - Diego Almonte)
      */
-    public void getDownload()
-    {
+    public void getDownload(){
         MailItem item = server.getNextMailItem(user);
-        if (item == null)
-        {
+        if (item == null){
             System.out.println("No hay ningun mensaje");
         }
-        else if(item.detectSpam()){
-            System.out.println("El mensaje es spam");
-        }
-
-        else
-        {
-            String gracias = "He recibido tu mensaje, gracias\n" + item.getMessage();
-            String asuntoOriginal = "Re: " + item.getSubject();
-            sendMailItem(item.getFrom(), asuntoOriginal, gracias);
-            ultimoEmail = item;
-            item.print();
-            totalReceived++;
-            if(item.getMessage().length() > longestEmail.getMessage().length()){
-                longestEmail = item;
+        else{
+            if(item.detectSpam()){
+                System.out.println("El mensaje es spam");
+            }
+            else{
+                String message = item.getMessage();
+                if((message.length() >=3) && (message.substring(0,3).equals("?=?"))){
+                    String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
+                    String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
+                    for (int i = 0; i < vowels.length; i++){
+                        message = message.replace(vowelsEncrypted[i], vowels[i]);
+                    }
+                }
+                else{
+                    message = item.getMessage();
+                }
+                String gracias = "He recibido tu mensaje, gracias\n" + message;
+                String asuntoOriginal = "Re: " + item.getSubject();
+                sendMailItem(item.getFrom(), asuntoOriginal, gracias);
+                ultimoEmail = item;
+                item.print();
+                totalReceived++;
+                if(item.getMessage().length() >= longestEmail.getMessage().length()){
+                    longestEmail = item;
+                }
             }
         }
     }
 
     /**
-     * 
+     * Funcionalidad 05 - Aitor Díez
      */
     public void latestTrayInfo(){
         System.out.println("Total de mensaje recibidos por "+ user + ": " + totalReceived + ".");
         System.out.println("Total de mensaje enviados por "+ user + ": " + totalSent + ".");
         if(totalReceived > 0){
             System.out.println(longestEmail.getFrom() + " ha enviado el mensaje más largo, con un total de " +
-            longestEmail.getMessage().length() + " caracteres.");
+                longestEmail.getMessage().length() + " caracteres.");
         }
     }
 }

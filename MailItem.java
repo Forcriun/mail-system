@@ -65,34 +65,30 @@ public class MailItem
 
     /**
      * Print this mail message to the text terminal. If the message is encrypted,
-     * it decrypts it.(Funcionalidades 04 y 06) - Dídac y Cristian
+     * it decrypts it.(Funcionalidade 06) - Cristian Martínez
      */
     public void print()
     {
         System.out.println("From: " + from);
         System.out.println("To: " + to);
         System.out.println("Subject: " + subject);
-        //Substring to "know" if it was a decrypted message
-        String markEncryption = message.substring(0,3);
-
         String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
         String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
-        if (markEncryption.equals("?=?")){
-            for (int i = 0; i < vowels.length; i++){
-                message = message.replace(vowelsEncrypted[i], vowels[i]);
-            }
-
-            //Prints the decrypted message
+        if (message.length() < 3){
             System.out.println("Message: " + message);
-
         }
         else{
+            if (message.substring(0,3).equals("?=?")){
+                for (int i = 0; i < vowels.length; i++){
+                    message = message.replace(vowelsEncrypted[i], vowels[i]);
+                }
+            }
             System.out.println("Message: " + message);
         }
     }
 
     /**
-     * Funcionalidad 04 - Dídac
+     * Funcionalidad 04 - Dídac Fernández
      */
     public boolean detectSpam()
     {

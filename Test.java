@@ -16,10 +16,7 @@ public class Test
     }
 
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Test de la Funcionalidad 01.
      */
     public void testFuncionalidad1()
     {
@@ -73,10 +70,7 @@ public class Test
     }
 
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Test de la Funcionalidad 02.
      */
     public void testFuncionalidad2()
     {
@@ -84,10 +78,7 @@ public class Test
     }
 
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Test de la Funcionalidad 03.
      */
     public void testFuncionalidad3()
     {
@@ -95,10 +86,7 @@ public class Test
     }
 
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Test de la Funcionalidad 04.
      */
     public void testFuncionalidad4()
     {
@@ -106,10 +94,7 @@ public class Test
     }
 
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Test de la Funcionalidad 05.
      */
     public void testFuncionalidad5()
     {
@@ -117,10 +102,7 @@ public class Test
     }
 
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Test de la Funcionalidad 06.
      */
     public void testFuncionalidad6()
     {
