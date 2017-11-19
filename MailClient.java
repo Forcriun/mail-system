@@ -64,6 +64,9 @@ public class MailClient
         if(item == null) {
             System.out.println("No new mail.");
         }
+        else if(item.detectSpam()){
+            System.out.println("El mensaje es spam");
+        }
         else {
             ultimoEmail = item;
             item.print();

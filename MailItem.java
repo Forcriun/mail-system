@@ -69,30 +69,25 @@ public class MailItem
      */
     public void print()
     {
-        if(detectSpam()){
-            System.out.println("El mensaje es spam");
+        System.out.println("From: " + from);
+        System.out.println("To: " + to);
+        System.out.println("Subject: " + subject);
+        //Substring to "know" if it was a decrypted message
+        String markEncryption = message.substring(0,3);
+
+        String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
+        String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
+        if (markEncryption.equals("?=?")){
+            for (int i = 0; i < vowels.length; i++){
+                message = message.replace(vowelsEncrypted[i], vowels[i]);
+            }
+
+            //Prints the decrypted message
+            System.out.println("Message: " + message);
+
         }
         else{
-            System.out.println("From: " + from);
-            System.out.println("To: " + to);
-            System.out.println("Subject: " + subject);
-            //Substring to "know" if it was a decrypted message
-            String markEncryption = message.substring(0,3);
-
-            String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
-            String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
-            if (markEncryption.equals("?=?")){
-                for (int i = 0; i < vowels.length; i++){
-                    message = message.replace(vowelsEncrypted[i], vowels[i]);
-                }
-
-                //Prints the decrypted message
-                System.out.println("Message: " + message);
-
-            }
-            else{
-                System.out.println("Message: " + message);
-            }
+            System.out.println("Message: " + message);
         }
     }
 
