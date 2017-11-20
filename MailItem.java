@@ -95,7 +95,7 @@ public class MailItem
     }
 
     /**
-     * Método para ENCRIPTAR
+     * Método para ENCRIPTAR -- F06
      */
     public void encryptMessage(){
         String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
@@ -107,7 +107,7 @@ public class MailItem
     }
 
     /**
-     * Método para DESENCRIPTAR
+     * Método para DESENCRIPTAR -- F06
      */
     public String decryptMessage(){
         if (message.substring(0,3).equals("?=?")){

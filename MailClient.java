@@ -61,7 +61,7 @@ public class MailClient
     public void printNextMailItem()
     {
         MailItem item = server.getNextMailItem(user);
-        if(item == null) {
+        if(item == null){
             System.out.println("No new mail.");
         }
         else if(item.detectSpam()){
@@ -87,7 +87,9 @@ public class MailClient
     {
         MailItem item = new MailItem(user, to, subject, message);
         server.post(item);
-        totalSent++;
+        if(!item.detectSpam()){
+            totalSent++;
+        }
     }
 
     /**
@@ -100,7 +102,9 @@ public class MailClient
         item.encryptMessage();
         //Sends it
         server.post(item);
-        totalSent++;
+        if(!item.detectSpam()){
+            totalSent++;
+        }
     }
 
     /**
