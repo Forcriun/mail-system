@@ -72,17 +72,11 @@ public class MailItem
         System.out.println("From: " + from);
         System.out.println("To: " + to);
         System.out.println("Subject: " + subject);
-        String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
-        String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
         if (message.length() < 3){
             System.out.println("Message: " + message);
         }
         else{
-            if (message.substring(0,3).equals("?=?")){
-                for (int i = 0; i < vowels.length; i++){
-                    message = message.replace(vowelsEncrypted[i], vowels[i]);
-                }
-            }
+            decryptMessage();
             System.out.println("Message: " + message);
         }
     }
@@ -98,5 +92,31 @@ public class MailItem
             spam = true;
         }
         return spam;
+    }
+
+    /**
+     * Método para ENCRIPTAR
+     */
+    public void encryptMessage(){
+        String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
+        String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
+        for (int i = 0; i < vowels.length; i++){
+            message = message.replace(vowels[i], vowelsEncrypted[i]);
+        }
+        message = "?=? " + message;
+    }
+
+    /**
+     * Método para DESENCRIPTAR
+     */
+    public String decryptMessage(){
+        if (message.substring(0,3).equals("?=?")){
+            String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
+            String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
+            for (int i = 0; i < vowels.length; i++){
+                message = message.replace(vowelsEncrypted[i], vowels[i]);
+            }
+        }
+        return message;
     }
 }

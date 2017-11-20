@@ -94,16 +94,10 @@ public class MailClient
      * Funcionalidad 06 - Cristian Martínez
      */
     public void sendMailItemEncrypted(String to, String subject, String message){
-        //Version limpia
-        String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
-        String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
-        for (int i = 0; i < vowels.length; i++){
-            message = message.replace(vowels[i], vowelsEncrypted[i]);
-        }
-        //Mark to reference an encrypted message
-        message = "?=? " + message;
         //Creates a new email object
         MailItem item = new MailItem(user, to, subject, message);
+        //Encrypts the message
+        item.encryptMessage();
         //Sends it
         server.post(item);
         totalSent++;
@@ -139,6 +133,7 @@ public class MailClient
      * e informa de la situación por pantalla.(Funcionalidad 03 - Diego Almonte)
      */
     public void getDownload(){
+        String gracias = "He recibido tu mensaje, gracias\n ";
         MailItem item = server.getNextMailItem(user);
         if (item == null){
             System.out.println("No hay ningun mensaje");
@@ -148,18 +143,13 @@ public class MailClient
                 System.out.println("El mensaje es spam");
             }
             else{
-                String message = item.getMessage();
-                if((message.length() >=3) && (message.substring(0,3).equals("?=?"))){
-                    String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
-                    String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
-                    for (int i = 0; i < vowels.length; i++){
-                        message = message.replace(vowelsEncrypted[i], vowels[i]);
-                    }
+                if(item.getMessage().length() >=3){
+                    String message = item.decryptMessage();
+                    gracias = gracias + message;
                 }
                 else{
-                    message = item.getMessage();
+                    gracias = gracias + item.getMessage();
                 }
-                String gracias = "He recibido tu mensaje, gracias\n" + message;
                 String asuntoOriginal = "Re: " + item.getSubject();
                 sendMailItem(item.getFrom(), asuntoOriginal, gracias);
                 ultimoEmail = item;
