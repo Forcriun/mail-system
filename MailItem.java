@@ -97,13 +97,14 @@ public class MailItem
     /**
      * Método para ENCRIPTAR -- F06
      */
-    public void encryptMessage(){
+    public String encryptMessage(){
         String vowels[] = {"A", "a", "E", "e", "I", "i", "O", "o", "U", "u"};
         String vowelsEncrypted[] = {"\\¡", "\\$", "\\¬", "\\&", "\\<", "\\#", "\\>", "\\+", "\"", "\\*"};
         for (int i = 0; i < vowels.length; i++){
             message = message.replace(vowels[i], vowelsEncrypted[i]);
         }
         message = "?=? " + message;
+        return message;
     }
 
     /**
